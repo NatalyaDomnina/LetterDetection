@@ -1,4 +1,4 @@
-import cv2
+Ôªøimport cv2
 import numpy as np
 import os
 import random
@@ -84,9 +84,9 @@ class Logic:
     def compare(img, images):
         img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         h, w = img_gray.shape
-        letters = ['A', '¡', '¬', '√', 'ƒ', '≈', '®', '∆', '«', '»', '…',
-                   ' ', 'À', 'Ã', 'Õ', 'Œ', 'œ', '–', '—', '“', '”', '‘',
-                   '’', '÷', 'ÿ', 'Ÿ', '⁄', '€', '‹', '›', 'ﬁ', 'ﬂ']
+        letters = ['A', '–ë', '–í', '–ì', '–î', '–ï', '–Å', '–ñ', '–ó', '–ò', '–ô',
+                   '–ö', '–õ', '–ú', '–ù', '–û', '–ü', '–†', '–°', '–¢', '–£', '–§',
+                   '–•', '–¶', '–ß', '–®', '–©', '–™', '–´', '–¨', '–≠', '–Æ', '–Ø']
         res = np.zeros(len(letters)+1, dtype = np.int)
         for k in range(len(images)):
             comp = cv2.imread(os.path.join(folder, images[k]), 0) # Load an color image in grayscale
