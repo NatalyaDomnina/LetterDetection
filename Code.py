@@ -2,6 +2,7 @@
 import numpy as np
 import os
 import random
+import time
 
 class Logic:
     def createGrid(img, thickness, count, color):
@@ -14,6 +15,7 @@ class Logic:
         return img
 
     def findGrid(img):
+
         h, w, c = img.shape
         img_output = np.zeros((h, w, 3), np.uint8)
         img_output[0:h,0:w] = (255,255,255)
@@ -90,7 +92,7 @@ class Logic:
         res = np.zeros(len(letters)+1, dtype = np.int)
         for k in range(len(images)):
             comp = cv2.imread(os.path.join(folder, images[k]), 0) # Load an color image in grayscale
-            comp = cv2.resize(comp, (0, 0), fx=0.5, fy=0.5)
+            comp = cv2.resize(comp, (0, 0), fx = resize, fy = resize)
             flag = False
             count_black = 0
             for i in range(h):
@@ -110,6 +112,12 @@ class Logic:
 
 s = Logic
 
+thickness = 17       # ширина решетки
+count = 6           # количество полосок решетки
+color = (0, 0, 0)   # цвет полосок
+resize = 0.7        # коэффициент уменьшения входного изображения
+comma = 5           # точность времени (знаки после запятой)
+
 images = os.listdir('C:/Users/Natali/Documents/Letters_color')
 
 random.seed(version = 2)
@@ -117,20 +125,35 @@ r = random.randrange(0, len(images), 1)
 
 folder = 'C:/Users/Natali/Documents/Letters_color/'
 img_input = cv2.imread(os.path.join(folder,images[r]))
-img_input = cv2.resize(img_input, (0,0), fx=0.5, fy=0.5)
-thickness = 7
-count = 5
-color = (0, 0, 0)
+img_input = cv2.resize(img_input, (0,0), fx = resize, fy = resize)
+
+print ("Создание решетки. ", end = '')
+start = time.clock()
 img_grid = s.createGrid(img_input, thickness, count, color)
-cv2.imshow('123', img_grid)
+elapsed = round((time.clock() - start), comma)
+print ("Затрачено " + str(elapsed) + " ms")
+cv2.imshow('img_grid', img_grid)
 
+print("Поиск решетки. ", end = '')
+start = time.clock()
 img_only_grid = s.findGrid(img_grid)
-cv2.imshow('234', img_only_grid)
+elapsed = round((time.clock() - start), comma)
+print ("Затрачено " + str(elapsed) + " ms")
+cv2.imshow('img_only_grid', img_only_grid)
 
+print("Вычитание решетки. ", end = '')
+start = time.clock()
 img_no_grid = s.subtrGrid(img_grid)
-cv2.imshow('345', img_no_grid)
+elapsed = round((time.clock() - start), comma)
+print ("Затрачено " + str(elapsed) + " ms")
+cv2.imshow('img_no_grid', img_no_grid)
 
+print("Сравнение. ", end = '')
+start = time.clock()
 letter = s.compare(img_no_grid, images)
-print (letter)
+elapsed = round((time.clock() - start), comma)
+print ("Затрачено " + str(elapsed) + " ms")
+
+print ("Найденная буква: " + letter)
 
 cv2.waitKey(0)
