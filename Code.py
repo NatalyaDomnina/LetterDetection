@@ -15,7 +15,6 @@ class Logic:
         return img
 
     def findGrid(img):
-
         h, w, c = img.shape
         img_output = np.zeros((h, w, 3), np.uint8)
         img_output[0:h,0:w] = (255,255,255)
@@ -112,10 +111,10 @@ class Logic:
 
 s = Logic
 
-thickness = 17       # ширина решетки
-count = 6           # количество полосок решетки
+thickness = 25      # ширина решетки
+count = 7           # количество полосок решетки
 color = (0, 0, 0)   # цвет полосок
-resize = 0.7        # коэффициент уменьшения входного изображения
+resize = 1          # коэффициент уменьшения входного изображения
 comma = 5           # точность времени (знаки после запятой)
 
 images = os.listdir('C:/Users/Natali/Documents/Letters_color')
@@ -126,33 +125,35 @@ r = random.randrange(0, len(images), 1)
 folder = 'C:/Users/Natali/Documents/Letters_color/'
 img_input = cv2.imread(os.path.join(folder,images[r]))
 img_input = cv2.resize(img_input, (0,0), fx = resize, fy = resize)
+size_h, size_w, _ = img_input.shape
 
+print ("Размер изображения:  " + str(size_h) + "x" + str(size_w))
 print ("Создание решетки. ", end = '')
 start = time.clock()
 img_grid = s.createGrid(img_input, thickness, count, color)
 elapsed = round((time.clock() - start), comma)
-print ("Затрачено " + str(elapsed) + " ms")
+print ("Затрачено " + str(elapsed) + " s")
 cv2.imshow('img_grid', img_grid)
 
 print("Поиск решетки. ", end = '')
 start = time.clock()
 img_only_grid = s.findGrid(img_grid)
 elapsed = round((time.clock() - start), comma)
-print ("Затрачено " + str(elapsed) + " ms")
+print ("Затрачено " + str(elapsed) + " s")
 cv2.imshow('img_only_grid', img_only_grid)
 
 print("Вычитание решетки. ", end = '')
 start = time.clock()
 img_no_grid = s.subtrGrid(img_grid)
 elapsed = round((time.clock() - start), comma)
-print ("Затрачено " + str(elapsed) + " ms")
+print ("Затрачено " + str(elapsed) + " s")
 cv2.imshow('img_no_grid', img_no_grid)
 
 print("Сравнение. ", end = '')
 start = time.clock()
 letter = s.compare(img_no_grid, images)
 elapsed = round((time.clock() - start), comma)
-print ("Затрачено " + str(elapsed) + " ms")
+print ("Затрачено " + str(elapsed) + " s")
 
 print ("Найденная буква: " + letter)
 
