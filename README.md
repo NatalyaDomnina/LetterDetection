@@ -1,4 +1,4 @@
 ### Распознавание буквы за решеткой
 Пример работы:
 
-![](https://pp.userapi.com/c841329/v841329287/2008a/r0mB0nBOVts.jpg) 
+![](https://pp.userapi.com/c840127/v840127235/45192/KbdjzkCxvdM.jpg) 
